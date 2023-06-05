@@ -1,5 +1,5 @@
 import random
-ranks=['A','K','Q','J',10,9,8,7,6,5,4,3,2]
+ranks=[14,13,12,11,10,9,8,7,6,5,4,3,2]
 suits =['Spades','Hearts','Diamond','Clubs']
 
 class Deck:
@@ -49,9 +49,9 @@ d.shuffle()
 cards1,cards2=d.split_half()
 
 #Creating players
-comp = Player("Computer", Hand(cards1))
+comp = Player("Computer", Hand(cards2))
 name=input("Your Name: ")
-you = Player(name, Hand(cards2))
+you = Player(name, Hand(cards1))
 total_rounds =0
 war_count = 0
 
@@ -75,22 +75,23 @@ while you.still_has_cards() and comp.still_has_cards():
         print("War happend")
         table_cards.extend(you.remove_war_cards())
         table_cards.extend(comp.remove_war_cards())
-        if ranks.index(comp_card[1]) < ranks.index(you_card[1]):
-            you.hand.add(table_cards)
-        else:
+        if ranks.index(comp_card[1]) > ranks.index(you_card[1]):
             comp.hand.add(table_cards)
+        else:
+            you.hand.add(table_cards)
     else:
-        if ranks.index(comp_card[1]) < ranks.index(you_card[1]):
-            you.hand.add(table_cards)
-        else:
+        if ranks.index(comp_card[1]) > ranks.index(you_card[1]):
             comp.hand.add(table_cards)
-print("Game completed!\nTotal number of rounds: "+str(total_rounds))
-print("War was " + str(war_count) +" times")
-#print("Computer has cards?",str(comp.still_has_cards()))
-#print(f"{name} has cards? {str(you.still_has_cards())}")
+        else:
+            you.hand.add(table_cards)
+
 
 def winner():
-    if str(you.still_has_cards())==True:
+    print("Game completed!\nTotal number of rounds: "+str(total_rounds))
+    print("War was " + str(war_count) +" times")
+    print("Computer has cards?",str(comp.still_has_cards()))
+    print(f"{name} has cards? {str(you.still_has_cards())}")
+    if str(you.still_has_cards())=="True":
         print(f"{name} is the Winner!")
     else:
         print("Computer is the Winner!")
