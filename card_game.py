@@ -28,8 +28,7 @@ class Player:
         self.hand=hand
     def play_card(self):
         drawn_card = self.hand.remove()
-        print("{} has shown : {}".format(self.name,drawn_card))
-        print("\n")
+        print("{} has shown : {}".format(self.name,drawn_card))        
         return drawn_card
     def remove_war_cards(self):
         war_cards=[]
@@ -49,9 +48,9 @@ d.shuffle()
 cards1,cards2=d.split_half()
 
 #Creating players
-comp = Player("Computer", Hand(cards2))
+comp = Player("Computer", Hand(cards1))
 name=input("Your Name: ")
-you = Player(name, Hand(cards1))
+you = Player(name, Hand(cards2))
 total_rounds =0
 war_count = 0
 
@@ -75,12 +74,12 @@ while you.still_has_cards() and comp.still_has_cards():
         print("War happend")
         table_cards.extend(you.remove_war_cards())
         table_cards.extend(comp.remove_war_cards())
-        if ranks.index(comp_card[1]) > ranks.index(you_card[1]):
+        if ranks.index(comp_card[1]) < ranks.index(you_card[1]):
             comp.hand.add(table_cards)
         else:
             you.hand.add(table_cards)
     else:
-        if ranks.index(comp_card[1]) > ranks.index(you_card[1]):
+        if ranks.index(comp_card[1]) < ranks.index(you_card[1]):
             comp.hand.add(table_cards)
         else:
             you.hand.add(table_cards)
